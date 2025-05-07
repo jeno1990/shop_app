@@ -1,11 +1,15 @@
-import 'package:ecommerce/presentation/ui/utils/app_color.dart';
 import 'package:flutter/material.dart';
+import 'package:shop_app/presentation/ui/utils/app_color.dart';
 
 class ProductsDetailsSizeSelector extends StatefulWidget {
   final List<String> sizes;
   final Function(int index) onSelect;
   final int initialSelected;
-  const ProductsDetailsSizeSelector({super.key, required this.sizes, required this.onSelect, required this.initialSelected});
+  const ProductsDetailsSizeSelector(
+      {super.key,
+      required this.sizes,
+      required this.onSelect,
+      required this.initialSelected});
 
   @override
   State<ProductsDetailsSizeSelector> createState() =>

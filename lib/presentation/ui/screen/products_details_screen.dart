@@ -1,24 +1,20 @@
 import 'dart:developer';
-
-import 'package:ecommerce/data/models/products_details.dart';
-import 'package:ecommerce/presentation/state_holders/add_to_cart_controller.dart';
-import 'package:ecommerce/presentation/state_holders/create_wish_list.dart';
-import 'package:ecommerce/presentation/state_holders/products_details_controller.dart';
-import 'package:ecommerce/presentation/ui/screen/review_showing_screen.dart';
-import 'package:ecommerce/presentation/ui/utils/app_color.dart';
-import 'package:ecommerce/presentation/ui/widgets/custom_app_bar.dart';
-import 'package:ecommerce/presentation/ui/widgets/custom_stepper.dart';
-import 'package:ecommerce/presentation/ui/widgets/love_icon_button.dart';
-import 'package:ecommerce/presentation/ui/widgets/products_carousel_slider.dart';
-import 'package:ecommerce/presentation/ui/widgets/products_details_screen_widgets/products_details_color_selector.dart';
-import 'package:ecommerce/presentation/ui/widgets/products_details_screen_widgets/products_details_size_selector.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:shop_app/data/models/products_details.dart';
+import 'package:shop_app/presentation/state_holders/products_details_controller.dart';
+import 'package:shop_app/presentation/ui/utils/app_color.dart';
+import 'package:shop_app/presentation/ui/widgets/custom_app_bar.dart';
+import 'package:shop_app/presentation/ui/widgets/custom_stepper.dart';
+import 'package:shop_app/presentation/ui/widgets/products_carousel_slider.dart';
+import 'package:shop_app/presentation/ui/widgets/products_details_screen_widgets/products_details_color_selector.dart';
+import 'package:shop_app/presentation/ui/widgets/products_details_screen_widgets/products_details_size_selector.dart';
 
 class ProductsDetailsScreen extends StatefulWidget {
-  final int productsId;
+  // final int productsId;
+  final ProductsDetails productsDetails;
 
-  const ProductsDetailsScreen({super.key, required this.productsId});
+  const ProductsDetailsScreen({super.key, required this.productsDetails});
 
   @override
   State<ProductsDetailsScreen> createState() => _ProductsDetailsScreenState();
@@ -30,9 +26,9 @@ class _ProductsDetailsScreenState extends State<ProductsDetailsScreen> {
     super.initState();
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      Get.find<ProductsDetailsController>()
-          .getProductsDetails(widget.productsId);
-      Get.find<ProductsDetailsController>().availableColor.clear();
+      // Get.find<ProductsDetailsController>()
+      //     .getProductsDetails(widget.productsId);
+      // Get.find<ProductsDetailsController>().availableColor.clear();
     });
   }
 
@@ -54,28 +50,22 @@ class _ProductsDetailsScreenState extends State<ProductsDetailsScreen> {
           return Column(
             children: [
               ProductsDetailsCarouselSlider(
-                imageList: [
-                  productsDetailsController.productsDetails.img1 ?? "",
-                  productsDetailsController.productsDetails.img2 ?? "",
-                  productsDetailsController.productsDetails.img3 ?? "",
-                  productsDetailsController.productsDetails.img4 ?? "",
-                ],
+                imageList: [widget.productsDetails.product?.image ?? ""],
               ),
               Expanded(
                 child: Padding(
                   padding: const EdgeInsets.all(12),
                   child: SingleChildScrollView(
-                    child: productsDetails(
-                        productsDetailsController.productsDetails,
-                        productsDetailsController.availableColor),
+                    child:
+                        productsDetails(widget.productsDetails, ['oxff18786a']),
                   ),
                 ),
               ),
-              cartBottomContainer(
-                productsDetailsController.productsDetails,
-                productsDetailsController.availableColor,
-                productsDetailsController.availableSizes,
-              ),
+              // cartBottomContainer(
+              //   productsDetailsController.productsDetails,
+              //   productsDetailsController.availableColor,
+              //   productsDetailsController.availableSizes,
+              // ),
             ],
           );
         },
@@ -125,29 +115,6 @@ class _ProductsDetailsScreenState extends State<ProductsDetailsScreen> {
                 color: Colors.blueGrey,
               ),
             ),
-            TextButton(
-              onPressed: () {
-                Get.to(
-                  () => ReviewsScreen(
-                    productsId: productsDetails.productId ?? 0,
-                  ),
-                );
-              },
-              child: const Text(
-                "Review",
-                style: TextStyle(
-                  fontWeight: FontWeight.w500,
-                  fontSize: 15,
-                ),
-              ),
-            ),
-            InkWell(
-              onTap: () {
-                Get.find<CreateWishListController>()
-                    .createWishList(productsDetails.productId!);
-              },
-              child: const FavoriteLoveIconButton(),
-            ),
           ],
         ),
         const Text(
@@ -195,130 +162,6 @@ class _ProductsDetailsScreenState extends State<ProductsDetailsScreen> {
           textAlign: TextAlign.justify,
         ),
       ],
-    );
-  }
-
-  // SizedBox productsDetailsColorSelector(List<String> colors) {
-  //   return SizedBox(
-  //     height: 30,
-  //     child: ListView.separated(
-  //       scrollDirection: Axis.horizontal,
-  //       itemCount: colors.length,
-  //       itemBuilder: (context, int index) {
-  //         return InkWell(
-  //           borderRadius: BorderRadius.circular(20),
-  //           onTap: () {
-  //             _selectedColorIndex = index;
-  //             if (mounted) {
-  //               setState(() {});
-  //             }
-  //           },
-  //           child: CircleAvatar(
-  //             radius: 18,
-  //             backgroundColor: HexColor.fromHex(colors[index]),
-  //             child: _selectedColorIndex == index
-  //                 ? const Icon(
-  //                     Icons.done,
-  //                     color: Colors.white,
-  //                   )
-  //                 : null,
-  //           ),
-  //         );
-  //       },
-  //       separatorBuilder: (context, int index) {
-  //         return const SizedBox(
-  //           width: 8,
-  //         );
-  //       },
-  //     ),
-  //   );
-  // }
-
-  Container cartBottomContainer(
-      ProductsDetails productsDetails, List<String> color, List<String> size) {
-    return Container(
-      clipBehavior: Clip.hardEdge,
-      height: 88,
-      width: double.infinity,
-      decoration: BoxDecoration(
-        borderRadius: const BorderRadius.only(
-          topRight: Radius.circular(24),
-          topLeft: Radius.circular(24),
-        ),
-        color: AppColor.primaryColor.withOpacity(0.2),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.all(18.0),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                const Text(
-                  "Price",
-                  style: TextStyle(fontSize: 16),
-                ),
-                const SizedBox(
-                  height: 5,
-                ),
-                Text(
-                  '${productsDetails.product?.price ?? 0}',
-                  style: const TextStyle(
-                      fontSize: 18,
-                      color: AppColor.primaryColor,
-                      fontWeight: FontWeight.bold),
-                ),
-              ],
-            ),
-            SizedBox(
-              width: 120,
-              child: GetBuilder<AddToCartController>(
-                builder: (addToCartController) {
-                  if (addToCartController.addToCartInProgress) {
-                    return const Center(
-                      child: CircularProgressIndicator(),
-                    );
-                  }
-                  return ElevatedButton(
-                    onPressed: () async {
-                      final results = await addToCartController.addToCart(
-                          productsDetails.id!,
-                          color[_selectedColorIndex].toString(),
-                          size[_selectedSizeIndex].toString());
-
-                      if (results) {
-                        Get.snackbar("Success", "Add to cart success");
-                        log(color[_selectedColorIndex]);
-                        log(size[_selectedSizeIndex]);
-                      }
-                      //else if (AuthController.accessToken!.isEmpty) {
-                      //   Get.defaultDialog(
-                      //       title: "Login",
-                      //       content: const Text(
-                      //           "To confirm your order, you need to login first"),
-                      //       onCancel: () {
-                      //         Get.back();
-                      //       },
-                      //       onConfirm: () {
-                      //         AuthController.clear();
-                      //       });
-                    },
-                    style: ElevatedButton.styleFrom(
-                      padding: const EdgeInsets.symmetric(vertical: 8),
-                    ),
-                    child: const Text(
-                      'Add to cart',
-                      style: TextStyle(fontSize: 13),
-                    ),
-                  );
-                },
-              ),
-            )
-          ],
-        ),
-      ),
     );
   }
 }

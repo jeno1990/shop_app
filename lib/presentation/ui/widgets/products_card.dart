@@ -1,9 +1,9 @@
-import 'package:ecommerce/data/models/products.dart';
-import 'package:ecommerce/presentation/state_holders/create_wish_list.dart';
-import 'package:ecommerce/presentation/ui/screen/products_details_screen.dart';
-import 'package:ecommerce/presentation/ui/utils/app_color.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:shop_app/data/models/products.dart';
+import 'package:shop_app/data/models/products_details.dart';
+import 'package:shop_app/presentation/ui/screen/products_details_screen.dart';
+import 'package:shop_app/presentation/ui/utils/app_color.dart';
 
 class ProductsCard extends StatelessWidget {
   const ProductsCard({
@@ -19,7 +19,15 @@ class ProductsCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        Get.to(() => ProductsDetailsScreen(productsId: product.id!));
+        Get.to(
+          () => ProductsDetailsScreen(
+            productsDetails: ProductsDetails(
+                id: product.id,
+                product: product,
+                size: "9",
+                des: product.shortDes),
+          ),
+        );
       },
       child: Card(
         elevation: 5,
@@ -106,10 +114,10 @@ class ProductsCard extends StatelessWidget {
                             ),
                           ),
                           onTap: () {
-                            isShowDeleteButton == false
-                                ? Get.find<CreateWishListController>()
-                                    .createWishList(product.id!)
-                                : null;
+                            // isShowDeleteButton == false
+                            //     ? Get.find<CreateWishListController>()
+                            //         .createWishList(product.id!)
+                            //     : null;
                           },
                         )
                       ],

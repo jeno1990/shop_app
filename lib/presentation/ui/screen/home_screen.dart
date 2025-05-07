@@ -1,23 +1,19 @@
-import 'package:ecommerce/presentation/state_holders/categories_controller.dart';
-import 'package:ecommerce/presentation/state_holders/home_screen_slider_controller.dart';
-import 'package:ecommerce/presentation/state_holders/main_bottom_nav_controller.dart';
-import 'package:ecommerce/presentation/state_holders/new_products_controller.dart';
-import 'package:ecommerce/presentation/state_holders/popular_products_controller.dart';
-import 'package:ecommerce/presentation/state_holders/spacial_products_controller.dart';
-import 'package:ecommerce/presentation/ui/screen/auth/email_verification_screen.dart';
-import 'package:ecommerce/presentation/ui/screen/item_screen.dart';
-import 'package:ecommerce/presentation/ui/utils/images_utils.dart';
-import 'package:ecommerce/presentation/ui/widgets/app_bar_icons.dart';
-import 'package:ecommerce/presentation/ui/widgets/categories_card.dart';
-import 'package:ecommerce/presentation/ui/widgets/home_screen_widgets/home_screen_search_bar.dart';
-import 'package:ecommerce/presentation/ui/widgets/home_screen_widgets/home_slider.dart';
-import 'package:ecommerce/presentation/ui/widgets/products_card.dart';
-import 'package:ecommerce/presentation/ui/widgets/shimmer_in_progress/shimmer_popular.dart';
-import 'package:ecommerce/presentation/ui/widgets/shimmer_in_progress/shimmer_progress.dart';
-import 'package:ecommerce/presentation/ui/widgets/title_header_and_see_all_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:shop_app/presentation/state_holders/categories_controller.dart';
+import 'package:shop_app/presentation/state_holders/home_screen_slider_controller.dart';
+import 'package:shop_app/presentation/state_holders/main_bottom_nav_controller.dart';
+import 'package:shop_app/presentation/state_holders/new_products_controller.dart';
+import 'package:shop_app/presentation/state_holders/popular_products_controller.dart';
+import 'package:shop_app/presentation/ui/widgets/app_bar_icons.dart';
+import 'package:shop_app/presentation/ui/widgets/categories_card.dart';
+import 'package:shop_app/presentation/ui/widgets/home_screen_widgets/home_screen_search_bar.dart';
+import 'package:shop_app/presentation/ui/widgets/home_screen_widgets/home_slider.dart';
+import 'package:shop_app/presentation/ui/widgets/products_card.dart';
+import 'package:shop_app/presentation/ui/widgets/shimmer_in_progress/shimmer_popular.dart';
+import 'package:shop_app/presentation/ui/widgets/shimmer_in_progress/shimmer_progress.dart';
+import 'package:shop_app/presentation/ui/widgets/title_header_and_see_all_button.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -69,42 +65,20 @@ class _HomeScreenState extends State<HomeScreen> {
               GetBuilder<PopularProductsController>(builder: (controller) {
                 return TitleHeaderAndSeeAllButton(
                   title: "Popular",
-                  onTap: () {
-                    Get.to(
-                      ItemsScreen(
-                        title: 'Popular',
-                        products: controller.productModel,
-                      ),
-                    );
-                  },
+                  onTap: () {},
                 );
               }),
               popularItemsListView,
-              // GetBuilder<SpecialProductsController>(
-              //     builder: (specialController) {
-              //   return TitleHeaderAndSeeAllButton(
-              //     title: "Special",
-              //     onTap: () {
-              //       Get.to(
-              //         ItemsScreen(
-              //           title: 'Special',
-              //           products: specialController.productModel,
-              //         ),
-              //       );
-              //     },
-              //   );
-              // }),
-              // specialItemListView,
               GetBuilder<NewProductsController>(builder: (newController) {
                 return TitleHeaderAndSeeAllButton(
                   title: "New",
                   onTap: () {
-                    Get.to(
-                      ItemsScreen(
-                        title: 'New',
-                        products: newController.productModel,
-                      ),
-                    );
+                    // Get.to(
+                    // ItemsScreen(
+                    //   title: 'New',
+                    //   products: newController.productModel,
+                    // ),
+                    // );
                   },
                 );
               }),
@@ -137,32 +111,6 @@ class _HomeScreenState extends State<HomeScreen> {
           },
         );
       }),
-    );
-  }
-
-  SizedBox get specialItemListView {
-    return SizedBox(
-      height: 182,
-      child: GetBuilder<SpecialProductsController>(
-        builder: (specialController) {
-          if (specialController.getSpecialProductsInProgress) {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          }
-          return ListView.builder(
-            addAutomaticKeepAlives: true,
-            scrollDirection: Axis.horizontal,
-            itemCount: specialController.productModel.data?.length ?? 0,
-            itemBuilder: (context, index) {
-              return ProductsCard(
-                product: specialController.productModel.data![index],
-                isShowDeleteButton: false,
-              );
-            },
-          );
-        },
-      ),
     );
   }
 

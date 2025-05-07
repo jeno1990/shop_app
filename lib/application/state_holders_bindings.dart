@@ -14,7 +14,6 @@ class StateHoldersBindings extends Bindings {
     Get.put(CategoriesController());
     Get.put(PopularProductsController());
     Get.put(NewProductsController());
-
     Get.put(ProductsDetailsController());
   }
 }

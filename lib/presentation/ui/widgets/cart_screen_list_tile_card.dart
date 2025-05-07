@@ -1,10 +1,8 @@
-import 'package:ecommerce/data/models/cart_list_data.dart';
-import 'package:ecommerce/presentation/state_holders/cart_list_controller.dart';
-import 'package:ecommerce/presentation/state_holders/delete_cart_list.dart';
-import 'package:ecommerce/presentation/ui/utils/app_color.dart';
-import 'package:ecommerce/presentation/ui/widgets/custom_stepper.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:shop_app/data/models/cart_list_data.dart';
+import 'package:shop_app/presentation/ui/utils/app_color.dart';
+import 'package:shop_app/presentation/ui/widgets/custom_stepper.dart';
 
 class CartListTileCard extends StatelessWidget {
   final CartData cartData;
@@ -26,9 +24,12 @@ class CartListTileCard extends StatelessWidget {
             width: 100,
             height: 100,
             decoration: BoxDecoration(
-                color: Colors.white,
-                image: DecorationImage(
-                    image: NetworkImage(cartData.product?.image ?? 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8c2hvZXN8ZW58MHx8MHx8fDA%3D&w=1000&q=80'),),),
+              color: Colors.white,
+              image: DecorationImage(
+                image: NetworkImage(cartData.product?.image ??
+                    'https://images.unsplash.com/photo-1542291026-7eec264c27ff?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8c2hvZXN8ZW58MHx8MHx8fDA%3D&w=1000&q=80'),
+              ),
+            ),
           ),
           const SizedBox(
             width: 8,
@@ -68,20 +69,6 @@ class CartListTileCard extends StatelessWidget {
                           ],
                         ),
                       ),
-                      GetBuilder<DeleteCartListController>(
-                        builder: (deleteController) {
-                          return IconButton(
-                              onPressed: () async{
-                                bool delete = await deleteController.deleteCartId(cartData.productId!);
-                                if(delete){
-                                  Get.snackbar("success", "products deleted successfully");
-                                }else{
-                                  Get.snackbar("failed", "products delete failed");
-                                }
-                              },
-                              icon: const Icon(Icons.delete_outline));
-                        }
-                      )
                     ],
                   ),
                   Row(
@@ -103,8 +90,8 @@ class CartListTileCard extends StatelessWidget {
                             stepValue: 1,
                             value: cartData.numberOfItems,
                             onChanged: (int value) {
-                              Get.find<CartListController>()
-                                  .changeItem(cartData.id!, value);
+                              // Get.find<CartListController>()
+                              //     .changeItem(cartData.id!, value);
                             },
                           ),
                         ),

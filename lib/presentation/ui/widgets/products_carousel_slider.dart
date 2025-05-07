@@ -1,6 +1,6 @@
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:ecommerce/presentation/ui/utils/app_color.dart';
 import 'package:flutter/material.dart';
+import 'package:shop_app/presentation/ui/utils/app_color.dart';
 
 class ProductsDetailsCarouselSlider extends StatefulWidget {
   final List<String> imageList;
@@ -43,6 +43,7 @@ class _ProductsDetailsCarouselSliderState
                     color: Colors.grey.shade200,
                     borderRadius: BorderRadius.circular(8),
                     image: DecorationImage(
+                      fit: BoxFit.contain,
                       image: NetworkImage(sliderData),
                     ),
                   ),

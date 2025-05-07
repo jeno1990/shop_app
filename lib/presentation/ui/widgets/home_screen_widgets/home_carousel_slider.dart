@@ -1,6 +1,6 @@
-import 'package:ecommerce/data/models/home_screen_slider_data.dart';
-import 'package:ecommerce/presentation/ui/utils/app_color.dart';
 import 'package:flutter/material.dart';
+import 'package:shop_app/data/models/home_screen_slider_data.dart';
+import 'package:shop_app/presentation/ui/utils/app_color.dart';
 
 class HomeCarouselSlider extends StatefulWidget {
   final List<SliderData> sliders;
@@ -39,7 +39,11 @@ class _HomeCarouselSliderState extends State<HomeCarouselSlider> {
                 ),
                 child: Stack(
                   children: [
-                    Image.network(data.image ?? "error", scale: 1.0,fit: BoxFit.scaleDown,),
+                    Image.network(
+                      data.image ?? "error",
+                      scale: 1.0,
+                      fit: BoxFit.scaleDown,
+                    ),
                     Positioned(
                       bottom: 0,
                       child: Text(

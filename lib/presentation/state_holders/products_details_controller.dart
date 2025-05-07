@@ -1,16 +1,13 @@
-import 'package:ecommerce/data/models/network_response.dart';
-import 'package:ecommerce/data/models/products_details.dart';
-import 'package:ecommerce/data/models/products_details_model.dart';
-import 'package:ecommerce/data/services/network_caller.dart';
-import 'package:ecommerce/data/utils/url_links.dart';
 import 'package:get/get.dart';
+import 'package:shop_app/data/models/products_details.dart';
+import 'package:shop_app/data/models/products_details_model.dart';
 
 class ProductsDetailsController extends GetxController {
   bool _getProductsDetailsInProgress = false;
-  ProductsDetails _productsDetails = ProductsDetails();
+  final ProductsDetails _productsDetails = ProductsDetails();
   final List<String> _availableColor = [];
-  List<String> _availableSizes = [];
-  String _errorMessage = '';
+  final List<String> _availableSizes = [];
+  final String _errorMessage = '';
 
   bool get getProductsDetailsInProgress => _getProductsDetailsInProgress;
 
@@ -25,36 +22,9 @@ class ProductsDetailsController extends GetxController {
   Future<bool> getProductsDetails(int productsId) async {
     _getProductsDetailsInProgress = true;
     update();
-    NetworkResponse response =
-        await NetworkCaller.getRequest(Urls.getProductsDetails(productsId));
+    await Future.delayed(const Duration(seconds: 3));
     _getProductsDetailsInProgress = false;
-    if (response.isSuccess && response.statusCode == 200) {
-      _productsDetails =
-          ProductsDetailsModel.fromJson(response.responseJson ?? {})
-              .data!
-              .first;
-
-      _convertedStringToColor(_productsDetails.color ?? "");
-      _convertStringToSizes(_productsDetails.size ?? "");
-      update();
-      return true;
-    } else {
-      _errorMessage = "Fetch products details has been failed! try again";
-      update();
-      return false;
-    }
-  }
-
-  void _convertedStringToColor(String color) {
-    final List<String> splittedColor = color.split(',');
-    for (String c in splittedColor) {
-      if (c.isNotEmpty) {
-        _availableColor.add(c);
-      }
-    }
-  }
-
-  void _convertStringToSizes(String sizes) {
-    _availableSizes = sizes.split(',');
+    update();
+    return true;
   }
 }

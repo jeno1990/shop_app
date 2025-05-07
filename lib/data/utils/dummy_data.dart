@@ -3,6 +3,7 @@ import 'package:shop_app/data/models/brands.dart';
 import 'package:shop_app/data/models/category_data.dart';
 import 'package:shop_app/data/models/home_screen_slider_data.dart';
 import 'package:shop_app/data/models/products.dart';
+import 'package:shop_app/data/models/products_details.dart';
 
 List<SliderData> dummy_slider_data = [
   SliderData(
@@ -38,7 +39,8 @@ List<Product> dummy_product_data = [
   Product(
     id: 1,
     title: "Calvin Klein",
-    shortDes: "Amazing product with great features",
+    shortDes:
+        "Amazing product with great features. Perfect for everyday comfort and style.",
     price: "46.99",
     discount: 10,
     discountPrice: "36.99",
@@ -59,7 +61,8 @@ List<Product> dummy_product_data = [
   Product(
     id: 1,
     title: "Nike",
-    shortDes: "Amazing product with great features",
+    shortDes:
+        "Amazing product with great features. Perfect for everyday comfort and style.",
     price: "46.99",
     discount: 10,
     discountPrice: "36.99",
@@ -80,7 +83,8 @@ List<Product> dummy_product_data = [
   Product(
     id: 1,
     title: "Sport Shoes",
-    shortDes: "Amazing product with great features",
+    shortDes:
+        "Amazing product with great features. Perfect for everyday comfort and style.",
     price: "46.99",
     discount: 10,
     discountPrice: "36.99",

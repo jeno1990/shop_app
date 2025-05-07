@@ -1,18 +1,24 @@
-import 'package:ecommerce/presentation/ui/utils/color_extension.dart';
 import 'package:flutter/material.dart';
+import 'package:shop_app/presentation/ui/utils/color_extension.dart';
 
 class ProductsDetailsColorSelector extends StatefulWidget {
   final List<String> colors;
   final int selectedColor;
   final Function(int index) onSelected;
 
-  const ProductsDetailsColorSelector({Key? key, required this.colors, required this.selectedColor, required this.onSelected}) : super(key: key);
+  const ProductsDetailsColorSelector(
+      {super.key,
+      required this.colors,
+      required this.selectedColor,
+      required this.onSelected});
 
   @override
-  State<ProductsDetailsColorSelector> createState() => _ProductsDetailsColorSelectorState();
+  State<ProductsDetailsColorSelector> createState() =>
+      _ProductsDetailsColorSelectorState();
 }
 
-class _ProductsDetailsColorSelectorState extends State<ProductsDetailsColorSelector> {
+class _ProductsDetailsColorSelectorState
+    extends State<ProductsDetailsColorSelector> {
   int colorSelectedIndex = 0;
 
   @override
@@ -28,20 +34,18 @@ class _ProductsDetailsColorSelectorState extends State<ProductsDetailsColorSelec
             onTap: () {
               colorSelectedIndex = index;
               widget.onSelected(index);
-              if(mounted){
-                setState(() {
-
-                });
+              if (mounted) {
+                setState(() {});
               }
             },
             child: CircleAvatar(
               radius: 18,
-              backgroundColor: HexColor.fromHex(widget.colors[index]),
+              backgroundColor: HexColor.fromHex('#18786a'),
               child: colorSelectedIndex == index
                   ? const Icon(
-                Icons.done,
-                color: Colors.white,
-              )
+                      Icons.done,
+                      color: Colors.white,
+                    )
                   : null,
             ),
           );

@@ -1,7 +1,7 @@
 // ignore_for_file: must_be_immutable
 
-import 'package:ecommerce/presentation/ui/utils/app_color.dart';
 import 'package:flutter/material.dart';
+import 'package:shop_app/presentation/ui/utils/app_color.dart';
 
 class CustomStepper extends StatefulWidget {
   final int stepValue;
