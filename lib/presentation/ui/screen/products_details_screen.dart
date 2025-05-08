@@ -2,6 +2,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shop_app/data/models/products_details.dart';
+import 'package:shop_app/presentation/state_holders/cart_controller.dart';
 import 'package:shop_app/presentation/state_holders/products_details_controller.dart';
 import 'package:shop_app/presentation/ui/utils/app_color.dart';
 import 'package:shop_app/presentation/ui/widgets/custom_app_bar.dart';
@@ -40,35 +41,121 @@ class _ProductsDetailsScreenState extends State<ProductsDetailsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: customAppBar("Products Details", true),
-      body: GetBuilder<ProductsDetailsController>(
-        builder: (productsDetailsController) {
-          if (productsDetailsController.getProductsDetailsInProgress) {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          }
-          return Column(
-            children: [
-              ProductsDetailsCarouselSlider(
-                imageList: [widget.productsDetails.product?.image ?? ""],
-              ),
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.all(12),
-                  child: SingleChildScrollView(
-                    child:
-                        productsDetails(widget.productsDetails, ['oxff18786a']),
+      body: Stack(
+        children: [
+          GetBuilder<ProductsDetailsController>(
+            builder: (productsDetailsController) {
+              if (productsDetailsController.getProductsDetailsInProgress) {
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              }
+              return Column(
+                children: [
+                  ProductsDetailsCarouselSlider(
+                    imageList: [widget.productsDetails.product?.image ?? ""],
                   ),
-                ),
-              ),
-              // cartBottomContainer(
-              //   productsDetailsController.productsDetails,
-              //   productsDetailsController.availableColor,
-              //   productsDetailsController.availableSizes,
-              // ),
-            ],
-          );
-        },
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.all(12),
+                      child: SingleChildScrollView(
+                        child: productsDetails(
+                            widget.productsDetails, ['oxff18786a']),
+                      ),
+                    ),
+                  ),
+                  // cartBottomContainer(
+                  //   productsDetailsController.productsDetails,
+                  //   productsDetailsController.availableColor,
+                  //   productsDetailsController.availableSizes,
+                  // ),
+                ],
+              );
+            },
+          ),
+          Positioned(
+            bottom: 0,
+            left: 0,
+            right: 0,
+            child: GetBuilder<ProductsDetailsController>(
+              builder: (productsDetailsController) {
+                return productsDetailsController.getProductsDetailsInProgress
+                    ? const SizedBox()
+                    : Container(
+                        padding: const EdgeInsets.all(16),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: const BorderRadius.only(
+                            topLeft: Radius.circular(16),
+                            topRight: Radius.circular(16),
+                          ),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.grey.withOpacity(0.2),
+                              spreadRadius: 2,
+                              blurRadius: 5,
+                              offset: const Offset(0, -3),
+                            ),
+                          ],
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                const Text(
+                                  'Price',
+                                  style: TextStyle(
+                                    fontSize: 14,
+                                    color: Colors.grey,
+                                  ),
+                                ),
+                                Text(
+                                  '\$${widget.productsDetails.product?.price ?? 0}',
+                                  style: const TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            ElevatedButton(
+                              onPressed: () {
+                                if (widget.productsDetails.product != null) {
+                                  Get.find<CartController>().addToCart(
+                                    widget.productsDetails.product!,
+                                  );
+                                  Get.showSnackbar(
+                                    const GetSnackBar(
+                                      message: 'Product added to cart',
+                                      duration: Duration(seconds: 2),
+                                    ),
+                                  );
+                                }
+                              },
+                              style: ElevatedButton.styleFrom(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 24, vertical: 12),
+                                backgroundColor: Colors.green,
+                              ),
+                              child: const Text(
+                                'Add to Cart',
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      );
+              },
+            ),
+          ),
+        ],
       ),
     );
   }

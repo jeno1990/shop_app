@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:shop_app/presentation/state_holders/cart_controller.dart';
 import 'package:shop_app/presentation/state_holders/categories_controller.dart';
 import 'package:shop_app/presentation/state_holders/home_screen_slider_controller.dart';
 import 'package:shop_app/presentation/state_holders/main_bottom_nav_controller.dart';
@@ -15,5 +16,6 @@ class StateHoldersBindings extends Bindings {
     Get.put(PopularProductsController());
     Get.put(NewProductsController());
     Get.put(ProductsDetailsController());
+    Get.put(CartController());
   }
 }

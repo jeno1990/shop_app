@@ -4,11 +4,11 @@ import 'package:shop_app/data/utils/dummy_data.dart';
 
 class HomeScreenSliderController extends GetxController {
   bool _homeScreenSliderInProgress = false;
-  HomeScreenSliderModel _sliderModel = HomeScreenSliderModel();
+  ProductModel _sliderModel = ProductModel();
   final String _message = '';
 
   bool get homeScreenSliderInProgress => _homeScreenSliderInProgress;
-  HomeScreenSliderModel get homeScreenSliderModel => _sliderModel;
+  ProductModel get homeScreenSliderModel => _sliderModel;
 
   String get message => _message;
 
@@ -17,7 +17,7 @@ class HomeScreenSliderController extends GetxController {
     update();
     _homeScreenSliderInProgress = false;
 
-    _sliderModel = HomeScreenSliderModel(
+    _sliderModel = ProductModel(
         msg: "slider fetched successfully", data: dummy_slider_data);
     await Future.delayed(const Duration(seconds: 3));
     update();

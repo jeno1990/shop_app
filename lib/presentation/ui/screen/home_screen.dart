@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:shop_app/presentation/state_holders/cart_controller.dart';
 import 'package:shop_app/presentation/state_holders/categories_controller.dart';
 import 'package:shop_app/presentation/state_holders/home_screen_slider_controller.dart';
 import 'package:shop_app/presentation/state_holders/main_bottom_nav_controller.dart';
 import 'package:shop_app/presentation/state_holders/new_products_controller.dart';
 import 'package:shop_app/presentation/state_holders/popular_products_controller.dart';
+import 'package:shop_app/presentation/ui/screen/cart_screen.dart';
 import 'package:shop_app/presentation/ui/widgets/app_bar_icons.dart';
 import 'package:shop_app/presentation/ui/widgets/categories_card.dart';
 import 'package:shop_app/presentation/ui/widgets/home_screen_widgets/home_screen_search_bar.dart';
@@ -181,16 +183,24 @@ class _HomeScreenState extends State<HomeScreen> {
           const SizedBox(
             width: 12,
           ),
-          AppBarIcons(
-            icon: Icons.phone_outlined,
-            onTap: () {},
-          ),
-          const SizedBox(
-            width: 12,
-          ),
-          AppBarIcons(
-            icon: Icons.notifications_active_outlined,
-            onTap: () {},
+          // AppBarIcons(
+          //   icon: Icons.phone_outlined,
+          //   onTap: () {},
+          // ),
+          // const SizedBox(
+          //   width: 12,
+          // ),
+          GetBuilder<CartController>(
+            // Wrap in GetBuilder
+            builder: (cartController) {
+              return AppBarIcons(
+                icon: Icons.shopping_cart_outlined,
+                size: cartController.cartItemCount, // Reactive update
+                onTap: () {
+                  Get.to(() => CartPage());
+                },
+              );
+            },
           ),
         ],
       ),

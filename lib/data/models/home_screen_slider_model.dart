@@ -1,12 +1,12 @@
 import 'package:shop_app/data/models/home_screen_slider_data.dart';
 
-class HomeScreenSliderModel {
+class ProductModel {
   String? msg;
   List<SliderData>? data;
 
-  HomeScreenSliderModel({this.msg, this.data});
+  ProductModel({this.msg, this.data});
 
-  HomeScreenSliderModel.fromJson(Map<String, dynamic> json) {
+  ProductModel.fromJson(Map<String, dynamic> json) {
     msg = json['msg'];
     if (json['data'] != null) {
       data = <SliderData>[];
